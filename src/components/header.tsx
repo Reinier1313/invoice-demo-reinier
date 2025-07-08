@@ -1,24 +1,32 @@
 // components/layout/Header.tsx
 "use client"
 
-import { useRouter, usePathname } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 
+type User = {
+  email: string
+  password: string
+}
+
+
 export default function Header() {
   const router = useRouter()
-  const pathname = usePathname()
   const [email, setEmail] = useState("")
 
   useEffect(() => {
-    const users = JSON.parse(localStorage.getItem("users") || "[]")
-    const token = localStorage.getItem("authToken")
-    const currentUser = users.find((u: any) => token && u)
+  const users: User[] = JSON.parse(localStorage.getItem("users") || "[]")
+  const token = localStorage.getItem("authToken")
 
-    if (currentUser) {
-      setEmail(currentUser.email)
-    }
-  }, [])
+  // simulate first logged-in user (in real apps you'd store a user ID/token)
+  const currentUser = token ? users[0] : null
+
+  if (currentUser) {
+    setEmail(currentUser.email)
+  }
+}, [])
+
 
   const handleLogout = () => {
     localStorage.removeItem("authToken")

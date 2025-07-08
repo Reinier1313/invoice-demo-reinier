@@ -13,6 +13,12 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 
+type User = {
+  email: string
+  password: string
+}
+
+
 export default function RegisterPage() {
   const router = useRouter()
   const [email, setEmail] = useState("")
@@ -37,8 +43,9 @@ export default function RegisterPage() {
       return
     }
 
-    const users = JSON.parse(localStorage.getItem("users") || "[]")
-    const existingUser = users.find((u: any) => u.email === email)
+    const users: User[] = JSON.parse(localStorage.getItem("users") || "[]")
+const existingUser = users.find((u) => u.email === email)
+
 
     if (existingUser) {
       alert("User already exists.")

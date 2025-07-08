@@ -13,23 +13,30 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 
+type User = {
+  email: string
+  password: string
+}
+
+
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  useEffect(() => {
-    // Redirect if already logged in
-    if (typeof window !== "undefined" && localStorage.getItem("authToken")) {
-      router.push("/invoice")
-    }
-  }, [router])
+  // Inside useEffect in /login/page.tsx and /register/page.tsx
+useEffect(() => {
+  const isLoggedIn = !!localStorage.getItem("authToken")
+  if (isLoggedIn) {
+    router.push("/invoice")
+  }
+}, [router])
+
 
   const handleLogin = () => {
     // Fake validation: check if any user is saved
-    const users = JSON.parse(localStorage.getItem("users") || "[]")
-    const user = users.find((u: any) => u.email === email && u.password === password)
-
+    const users: User[] = JSON.parse(localStorage.getItem("users") || "[]")
+const user = users.find((u) => u.email === email && u.password === password)
     if (user) {
       localStorage.setItem("authToken", "example-token")
       router.push("/invoice")

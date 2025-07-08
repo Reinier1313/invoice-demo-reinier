@@ -3,7 +3,6 @@
 
 import { useEffect, useState } from "react"
 import { useRouter, useParams } from "next/navigation"
-import { v4 as uuidv4 } from "uuid"
 import ProtectedRoute from "@/components/protected-route"
 import Header from "@/components/header"
 import { Input } from "@/components/ui/input"
